@@ -6,7 +6,7 @@ use rustc::lint::{LintPass, LintArray, Context};
 use syntax::attr::contains_name;
 use syntax::ast;
 use rustc::middle::const_eval::eval_const_expr;
-use rustc::middle::const_eval::const_val::const_bool;
+use rustc::middle::const_eval::const_val::*;
 use rustc::plugin::registry::Registry;
 
 declare_lint!(STATIC_ASSERT, Deny,
@@ -28,10 +28,18 @@ impl LintPass for StaticAssertPass {
             _ => return,
         };
         match evaluated {
-            const_bool(false) => cx.span_lint(STATIC_ASSERT, it.span, "static assertion failed"),
-            const_bool(true) => {},
-            _ => cx.span_lint(STATIC_ASSERT, it.span, "static assertion on non-bool"),
+            const_bool(true) => return,
+            // FIXME: https://github.com/rust-lang/rust/issues/25307
+            const_int(i) if i == 1 => return,
+            const_uint(_) => cx.sess().span_err(it.span, "static assertion on uint"),
+            const_float(_) => cx.sess().span_err(it.span, "static assertion on float"),
+            const_str(_) => cx.sess().span_err(it.span, "static assertion on str"),
+            const_binary(_) => cx.sess().span_err(it.span, "static assertion on binary"),
+            Struct(_) => cx.sess().span_err(it.span, "static assertion on struct"),
+            Tuple(_) => cx.sess().span_err(it.span, "static assertion on tuple"),
+            _ => {}
         }
+        cx.span_lint(STATIC_ASSERT, it.span, "static assertion failed");
     }
 }
 
