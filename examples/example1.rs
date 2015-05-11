@@ -3,5 +3,6 @@
 
 fn main() {
     #[static_assert_]
+    #[allow(dead_code)]
     const TEST: bool = true;
 }

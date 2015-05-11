@@ -9,7 +9,7 @@ use rustc::middle::const_eval::eval_const_expr;
 use rustc::middle::const_eval::const_val::const_bool;
 use rustc::plugin::registry::Registry;
 
-declare_lint!(STATIC_ASSERT, Forbid,
+declare_lint!(STATIC_ASSERT, Deny,
               "check compile-time information");
 
 struct StaticAssertPass;
@@ -28,8 +28,8 @@ impl LintPass for StaticAssertPass {
             _ => return,
         };
         match evaluated {
-            const_bool(true) => cx.span_lint(STATIC_ASSERT, it.span, "static assertion failed"),
-            const_bool(false) => {},
+            const_bool(false) => cx.span_lint(STATIC_ASSERT, it.span, "static assertion failed"),
+            const_bool(true) => {},
             _ => cx.span_lint(STATIC_ASSERT, it.span, "static assertion on non-bool"),
         }
     }
