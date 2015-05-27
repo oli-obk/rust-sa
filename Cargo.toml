@@ -1,6 +1,6 @@
 [package]
 name = "static_assert"
-version = "0.1.2"
+version = "0.1.3"
 authors = ["Oliver Schneider <rust-sa8217693178821785@oli-obk.de>"]
 description = "static assertions"
 homepage = "https://github.com/oli-obk/rust-sa"
