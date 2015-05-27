@@ -47,3 +47,12 @@ impl LintPass for StaticAssertPass {
 pub fn plugin_registrar(reg: &mut Registry) {
     reg.register_lint_pass(box StaticAssertPass); // as LintPassObject
 }
+
+#[macro_export]
+macro_rules! static_assert(
+    ($e:expr) => {
+        #[static_assert_]
+        #[allow(dead_code)]
+        const COND: bool = $e;
+    }
+);
