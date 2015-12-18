@@ -3,7 +3,6 @@
 
 fn main() {
     #[static_assert_]
-    #[warn(static_assert)]
     #[allow(dead_code)]
-    const TEST: bool = false;
+    const TEST: bool = false; //~ ERROR: static assertion failed
 }
