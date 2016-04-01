@@ -4,14 +4,10 @@
 ##Example usage
 
 ```rust
-#![feature(plugin, custom_attribute)]
-#![plugin(static_assert_)]
-#[macro_use(static_assert)] extern crate static_assert_;
+#![feature(plugin)]
+#![plugin(static_assert)]
 
 fn main() {
-    #[static_assert_]
-    const TEST: bool = false;
-
     static_assert!(5 == 4);
 }
 ```
