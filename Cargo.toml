@@ -14,4 +14,4 @@ name = "static_assert"
 plugin = true
 
 [dev-dependencies]
-compiletest_rs = "*"
+compiletest_rs = "0.1.1"
