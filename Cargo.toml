@@ -1,6 +1,6 @@
 [package]
 name = "static_assert"
-version = "0.2.0"
+version = "0.3.0"
 authors = ["Oliver Schneider <rust-sa8217693178821785@oli-obk.de>"]
 description = "static assertions"
 homepage = "https://github.com/oli-obk/rust-sa"
@@ -10,7 +10,7 @@ keywords = ["compile", "time", "static", "assert"]
 license-file = "LICENSE"
 
 [lib]
-name = "static_assert_"
+name = "static_assert"
 plugin = true
 
 [dev-dependencies]

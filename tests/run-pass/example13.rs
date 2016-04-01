@@ -1,7 +1,9 @@
 #![feature(plugin)]
 #![plugin(static_assert)]
 
-static_assert!(false); //~ ERROR: static assertion failed
+const TEST3: bool = true;
+
+static_assert!(TEST3);
 
 fn main() {
 }
