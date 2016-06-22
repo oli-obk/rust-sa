@@ -1,7 +1,6 @@
 #![feature(plugin_registrar, box_syntax, rustc_private)]
 #[macro_use] extern crate rustc;
 extern crate rustc_plugin;
-extern crate rustc_front;
 extern crate rustc_const_eval;
 extern crate syntax;
 
@@ -10,7 +9,7 @@ use rustc::lint::{LintPass, LateLintPass, LintArray, LateContext, LintContext};
 use rustc_const_eval::eval_const_expr;
 use rustc::middle::const_val::ConstVal::*;
 use rustc_plugin::registry::Registry;
-use rustc_front::hir;
+use rustc::hir;
 use syntax::ext::base::{ExtCtxt, MacResult, DummyResult, TTMacroExpander, MacEager};
 use syntax::ext::base::SyntaxExtension::NormalTT;
 use syntax::codemap::Span;
@@ -36,7 +35,7 @@ impl LateLintPass for StaticAssertPass {
             return;
         }
         let evaluated = if let hir::ItemConst(_, ref expr) = it.node {
-            eval_const_expr(&cx.tcx, expr)
+            eval_const_expr(cx.tcx, expr)
         } else {
             return
         };
