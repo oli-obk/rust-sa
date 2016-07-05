@@ -13,10 +13,11 @@ use rustc::hir;
 use syntax::ext::base::{ExtCtxt, MacResult, DummyResult, TTMacroExpander, MacEager};
 use syntax::ext::base::SyntaxExtension::NormalTT;
 use syntax::codemap::Span;
-use syntax::ast::{TokenTree, ItemKind};
+use syntax::ast::ItemKind;
 use syntax::parse::token::{intern, gensym_ident};
 use syntax::ext::build::AstBuilder;
 use syntax::feature_gate::AttributeType;
+use syntax::tokenstream::TokenTree;
 
 declare_lint!(STATIC_ASSERT, Deny,
               "check compile-time information");
@@ -72,7 +73,7 @@ impl TTMacroExpander for StaticAssertMacro {
                 box MacEager {
                     items: Some(syntax::util::small_vector::SmallVector::one(item.clone())),
                     stmts: Some(syntax::util::small_vector::SmallVector::one(cx.stmt_item(sp, item.clone()))),
-                    expr: Some(cx.expr_block(cx.block(sp, vec![cx.stmt_item(sp, item)], None))),
+                    expr: Some(cx.expr_block(cx.block(sp, vec![cx.stmt_item(sp, item)]))),
                     .. MacEager::default()
                 }
             },
